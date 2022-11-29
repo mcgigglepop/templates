@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    <section id="subheader">
+      <div class="center-y relative text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h1>Dashboard</h1>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="section-main" aria-label="section">
+      <div class="container-fluid p-5">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <form id="form-create-item" class="form-border">
+              <div class="de_tab tab_simple">
+                <ul class="de_nav">
+                  <li class="active"><span><i class="fa fa-user"></i>Collections</span></li>
+                  <li><span><i class="fa fa-exclamation-circle"></i>Items</span></li>
+                </ul>
+                <div class="de_tab_content">                            
+                  <div class="tab-1">
+                    <div class="row  ">
+                      <div class="col-lg-12 mb-sm-20 pb-5">
+                        <a href="create_collection" class="btn-main btn-wallet"><span>Create Collection</span></a>
+                      </div>
+                    </div>
+                    <div class="row  ">
+                      <div class="col-lg-12 mb-sm-20">
+                        <div class="field-set">
+                          <table class="table de-table table-rank">
+                            <thead>
+                              <tr>
+                                <th scope="col">Collection Name</th>
+                                <th scope="col">Items</th>
+                                <th scope="col">Visibility</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for collection in collections %}
+                                <tr>
+                                  <th scope="row" class="collection-link">
+                                    <div class="coll_list_pp">
+                                      <img class="lazy" src="{{url_for('static', filename='images/icons/collection.png')}}" alt="">
+                                    </div>  
+                                    <a href="collection_details/{{collection.id}}" >{{ collection.name }}</a>
+                                  </th>
+                                  <td>{{ collection.item_count }}</td>
+                                  {% if collection.visibility == 'Public' %}<td class="d-plus">{% else %}<td class="d-min">{% endif %}
+                                    {{ collection.visibility }}
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                          <div class="spacer-double"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-2">
+                    <div class="row  ">
+                      <div class="col-md-12 mb-sm-20">
+                        <div class="row  ">
+                          <div class="col-lg-12 mb-sm-20 pb-5">
+                            <a href="create_options" class="btn-main btn-wallet"><span>Create Item</span></a>
+                          </div>
+                        </div>
+                        <table class="table de-table table-rank">
+                            <thead>
+                              <tr>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Collection</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Category</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in items %}
+                              <tr>
+                                <th scope="row" class="item-link">
+                                  <div class="coll_list_pp">
+                                    <a href="item_details/{{item.id}}"><img class="lazy" src="{{item.get_images(item.id)[0].name}}" alt=""></a>
+                                  </div>  
+                                  <a href="item_details/{{item.id}}">{{item.name}}</a></th>
+                                  <td class="item-link"><a href="collection_details/{{item.collection_id}}">{{item.collection_name}}</a></td>
+                                  <td class="d-plus">Active</td>
+                                  <td>Art</td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="spacer-double"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    
+    <!-- section begin -->
+    <section id="subheader">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-md-12 text-center">
+                            <h1>Edit Profile</h1>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- section close -->            
+
+    <!-- section begin -->
+    <section id="section-main" aria-label="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="spacer-10"></div>
+                    <form id="form-create-item" class="form-border" method="POST" action="/profile">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="de_tab tab_simple">
+                    
+                        <ul class="de_nav">
+                            <li class="active"><span><i class="fa fa-user"></i>Profile</span></li>
+                        </ul>
+                        
+                        <div class="de_tab_content">                            
+                            <div class="tab-1">
+                                <div class="row wow fadeIn">
+                                    <div class="col-lg-8 mb-sm-20">
+                                            <div class="field-set">
+                                                <h5>Username</h5>
+                                                <input type="text" name="username" id="username" class="form-control" placeholder="Enter username" value="{{current_user.username}}"/>                                    
+
+                                                <div class="spacer-20"></div>
+
+                                                <h5>Email Address*</h5>
+                                                <input type="text" name="email_address" id="email_address" class="form-control" placeholder="Enter email" value="{{current_user.email}}"/>
+
+                                                <div class="spacer-20"></div>
+
+                                            </div>
+                                            <div id="register-alert" class="" role="alert">
+                                                {% with messages = get_flashed_messages() %}
+                                                    {% if messages %}
+                                                        <div class="notification is-danger text-center text-danger">
+                                                            {{ messages[0] }}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            </div>
+                                    </div>
+
+                                    <div id="sidebar" class="col-lg-4">
+                                        <h5>Profile image <i class="fa fa-info-circle id-color-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Recommend 400 x 400. Max size: 50MB. Click the image to upload."></i></h5>
+                                        <img src="{{ current_user.avatar(128) }}" id="click_profile_img" class="d-profile-img-edit img-fluid" alt="">
+                                        
+                                        <input type="file" id="upload_profile_img" name="profile_image" class="imgInp"> 
+                                        <input type="hidden" id="hidden_profile_image" name="hidden_profile_image">
+
+                                        <div class="spacer-30"></div>
+
+                                        <h5>Profile banner <i class="fa fa-info-circle id-color-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Recommend 1500 x 500. Max size: 50MB. Click the image to upload."></i></h5>
+                                        
+
+
+                                        {% if current_user.background_image is none%}
+                                        <img src="{{url_for('static', filename='images/author_single/author_banner.jpg')}}" id="click_banner_img" class="d-banner-img-edit img-fluid" alt="">
+                                        {% else %}
+                                        <img src="{{current_user.background_image}}" id="click_banner_img" class="d-banner-img-edit img-fluid" alt="">
+                                        {% endif %}
+
+
+
+
+
+
+
+
+                                        
+                                        
+                                        <input type="file" id="upload_banner_img" name="banner_image" class="bannerInp"> 
+                                        <input type="hidden" id="hidden_banner_image" name="hidden_banner_image">
+                                    </div>                                         
+                                </div>
+                            </div>
+
+                           
+
+                        </div>
+                    </div>
+
+                    <div class="spacer-30"></div>
+                    <input type="submit" id="submit" class="btn-main" value="Update profile">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    <section id="subheader">
+        <div class="center-y relative text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>Create Collection</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section-main" aria-label="section">
+        <div class="container-fluid p-5">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <form method="POST" action="/create_collection" id="form-create-item" class="form-border">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="de_tab tab_simple">
+                            <div class="de_tab_content">                            
+                                <div class="tab-1">
+                                    <div class="row wow fadeIn">
+                                        <div class="col-lg-12 mb-sm-20">
+                                            <h5>Choose Visibility</h5>
+                                            <p class="p-info">Choose whether this collection will be public or private</p>
+                                            <div id="collection_visibility" class="dropdown fullwidth mb20">
+                                                <a href="#" class="btn-selector">Visibility</a>
+                                                <ul>
+                                                    <li><span>Private</span></li>
+                                                    <li><span>Public</span></li>
+                                                </ul>
+                                            </div>
+                                            <input type="hidden" name="collection_visibility" id="collection_visibility">
+                                            <div class="spacer-20"></div>
+                                            <h5>Title</h5>
+                                            <input type="text" name="collection_title" id="collection_title" class="form-control" placeholder="e.g. 'Crypto Funk" />
+                                            <div class="spacer-20"></div>
+                                            <h5>Description</h5>
+                                            <textarea data-autoresize name="collection_desc" id="collection_desc" class="form-control" placeholder="e.g. 'Vintage Trading Cards'"></textarea>
+                                            <div class="spacer-20"></div>
+                                            <input type='submit' id='send_message' value='Create Collection' class="btn btn-main color-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

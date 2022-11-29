@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    
+    <!-- section begin -->
+    <section id="subheader">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-md-12 text-center">
+                            <h1>Register</h1>
+                            <p><i>the future is here</i></p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- section close -->
+    
+
+    <section aria-label="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h3>Don't have an account? Register now.</h3>
+                    <p>Register a free account to start organizing your collections. You can later <a href="faq/authorized_seller">submit an authorization request</a> to become a verified owner and begin trading on our platform. If you already have an account, you can login <a href="login">here<span></span></a>.</p>
+                    
+                    <div class="spacer-10"></div>
+                    
+                    <form name="registrationForm" id='registration_form' class="form-border needs-validation" method="post" action='register' novalidate>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="row">
+
+                            
+
+                            <div class="col-md-6">
+                                <div class="field-set">
+                                    <label>Email Address:</label>
+                                    <input type='text' name='email' id='email' class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="field-set">
+                                    <label>Choose a Username:</label>
+                                    <input type='text' name='username' id='username' class="form-control">
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="col-md-6">
+                                <div class="field-set">
+                                    <label>Password:</label>
+                                    <input type='password' name='password' id='password' class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="field-set">
+                                    <label>Re-enter Password:</label>
+                                    <input type='password' name='password_confirm' id='password_confirm' class="form-control" required>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+
+                                <div id='submit' class="pull-left">
+                                    <input type='submit' id='send_message' value='Register Now' class="btn btn-main color-2">
+                                </div>
+
+                                <div id="register-alert" class="" role="alert">
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            <div class="notification is-danger text-center text-danger">
+                                                {{ messages[0] }}
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="clearfix"></div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+</div>
+<!-- content close -->
+
+<a href="#" id="back-to-top"></a>
+{% endblock %}

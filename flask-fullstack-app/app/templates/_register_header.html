@@ -1,0 +1,27 @@
+<header class="transparent header-light scroll-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="de-flex sm-pt10">
+                    <div class="de-flex-col">
+                        <div class="de-flex-col">
+                            <div id="logo">
+                                <a href="{{ url_for('main.index') }}"><h4>The Collector Set</h4></a>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="de-flex-col header-col-mid">
+                        <ul id="mainmenu">
+                            <li><a href="{{ url_for('main.index') }}">Home<span></span></a></li>
+                            <li class="d-block d-lg-none"><a href="{{ url_for('auth.login') }}">Login<span></span></a></li>
+                        </ul>
+                        <div class="menu_side_area">
+                            <a href="{{ url_for('auth.login') }}" class="btn-main d-none d-lg-block"><span>Login</span></a>
+                            <span id="menu-btn"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

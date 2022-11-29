@@ -1,0 +1,63 @@
+python -m venv fenv
+fenv/scripts/activate
+$env:FLASK_APP = "thecollectorset.py"
+$env:FLASK_DEBUG = 1 / 0
+pip install -r requirements.txt
+flask run
+
+flask db init
+flask db migrate -m "init"
+flask db upgrade
+
+flask db downgrade
+deactivate
+
+flask db history
+flask db current
+
+Deploying Docker
+-----------------------------------------------------------
+Create an ECR Repository for the Docker Image. Insure the repository name, region and profile are accurate:
+
+aws ecr create-repository --repository-name REPOSITORY_NAME --image-scanning-configuration scanOnPush=true --region REGION --profile PROFILE
+
+Authenticate to ECR and docker login. Ensure the region, profile and AWS account number and region are accurate:
+
+aws ecr get-login-password --region REGION --profile PROFILE | docker login --username AWS --password-stdin ACCOUNT.dkr.ecr.REGION.amazonaws.com/REPOSITORY_NAME
+
+Change into the api directory and build and tag the docker image. Ensure the name is the same as your repository name and region and account number are accurate
+
+cd api
+docker build --tag REPOSITORY_NAME .
+docker tag REPOSITORY_NAME:latest ACCOUNT.dkr.ecr.REGION.amazonaws.com/REPOSITORY_NAME:latest
+
+Push your image to ECR. Ensure the account number and region are accurate
+
+docker push ACCOUNT.dkr.ecr.REGION.amazonaws.com/REPOSITORY_NAME:latest
+
+
+Test Info
+-------------------------------------
+Repository Name: flask-docker-demo-app
+
+Testing Locally:
+-------------------------------------
+Build the docker Image
+docker build --tag REPOSITORY_NAME .
+
+Run a container and publish over port 5000
+docker run --publish 5000:5000 523534f1
+
+Access the url to test locally in the browser.
+
+Terraform
+---------------------------------------------------------------
+---------------------------------------------------------------
+Change into /architecture
+
+cd architecture
+
+**Ensure the AWS profile is set in the variables.tf file
+
+Terraform init, terraform apply
+terraform init; terraform apply --auto-approve

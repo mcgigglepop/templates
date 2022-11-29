@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-grid.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-reboot.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.transitions.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.countdown.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/de-retro.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/colors/scheme-05.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/coloring.css') }}">
+        {% if 'create_item' in request.path %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/create-item.css') }}">
+        {% endif %}
+        {% if 'item_details' in request.path %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/item-details.css') }}">
+        {% endif %}
+        {% if 'edit_item' in request.path %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/edit-item.css') }}">
+        {% endif %}
+        {% if title %}
+            <title>{{ title }} - The Collector Set</title>
+        {% else %}
+            <title>The Collector Set</title>
+        {% endif %}
+    </head>
+    <body>
+        {% if 'login' in request.path %}
+            {% include '_login_header.html' %}
+        {% elif 'register' in request.path %}
+            {% include '_register_header.html' %}
+        {% else %}
+            {% include '_main_header.html' %}
+        {% endif %}
+        {% block content %}{% endblock %}
+        {% include '_footer.html' %}
+        <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/wow.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.isotope.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/easing.js')}}"></script>
+        <script src="{{url_for('static', filename='js/owl.carousel.js')}}"></script>
+        <script src="{{url_for('static', filename='js/validation.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/enquire.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.plugin.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.countTo.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.countdown.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.lazy.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/jquery.lazy.plugins.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/designesia.js')}}"></script>
+        {% if 'create_collection' in request.path %}
+            <script src="{{url_for('static', filename='js/create-collection.js')}}"></script>
+        {% endif %}
+        {% if 'create_item' in request.path %}
+            <script src="{{url_for('static', filename='js/create-item.js')}}"></script>
+        {% endif %}
+        {% if 'item_details' in request.path %}
+            <script src="{{url_for('static', filename='js/images-loaded.js')}}"></script>
+            
+            <script src="{{url_for('static', filename='js/hammer.js')}}"></script>
+            <script src="{{url_for('static', filename='js/sequence.js')}}"></script>
+            <script src="{{url_for('static', filename='js/item-details.js')}}"></script>
+            <script>
+                var decodeEntities = (function() {
+                    var element = document.createElement('div');
+                    function decodeHTMLEntities (str) {
+                        if(str && typeof str === 'string') {
+                            str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+                            str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+                            element.innerHTML = str;
+                            str = element.textContent;
+                            element.textContent = '';
+                        }
+                        return str;
+                    }
+                    return decodeHTMLEntities;
+                })();
+                var div = document.getElementById('custom-fields');
+                var json = "{{ item.custom }}";
+                
+                if(typeof json != 'undefined'){
+                    if(json == ''){
+
+                    }else{
+                        var parsed = JSON.parse(decodeEntities(json));
+                    for(var i=0; i<parsed.length;i++){
+                        div.innerHTML += '<div class="item_attr"><h4>'+parsed[i].key+'</h4><span>'+parsed[i].value+'</span></div';
+                    }
+                    }
+                    
+                }else{
+                       
+                }
+            </script>
+        {% endif %}
+        {% if 'edit_item' in request.path %}
+            <script>
+                var imgArray = [];
+                var secondArr = [];
+                var innerObj = {};
+
+                var img_array = {{ images|tojson }} 
+               
+                // populate the custom image picker images
+                for(var i=0; i<img_array.length; i++){
+                    if((img_array.length == 1) && img_array[i] == '../static/images/no-img.jpg'){
+                        break;
+                    }
+                    $('#custom-images').append("<div class='upload__img-box'><div style='background-image: url("+ img_array[i] +")' class='img-bg'><div class='upload__img-close'><input type='hidden' id='img-"+ img_array[i] +"' name='img-"+ img_array[i] +"' value='"+ img_array[i] +"'></div></div></div>");            
+                    imgArray.push(img_array[i]);
+                    innerObj.name = img_array[i];
+                    innerObj.val = img_array[i];
+                    secondArr.push(innerObj);
+                    innerObj = {};
+                }
+                
+// populate the preview item
+if(secondArr.length >= 1){
+    document.getElementById('img-preview').children[0].remove();
+    var pop = '<h5>Preview item</h5><div class="nft__item style-2"><div class="nft__item_wrap"><a href="#"><img src="'+ img_array[0] +'" id="" class="lazy nft__item_preview" alt=""></a></div><div class="nft__item_info"><a href="#"><h4>Collectible Name</h4></a><span></span></div></div>';
+    document.getElementById('img-preview').innerHTML = pop;
+}
+
+populateObj();
+
+// build custom fields
+function populateObj(){
+    var customArray = [];
+    var customDict = {};
+    $("#custom-fields :input, #custom-fields h5").each(function(e){	
+        if (this.tagName === 'H5'){
+            customDict['key'] = this.textContent;
+        }
+        if (this.tagName === 'INPUT'){
+            customDict['value'] = this.value;
+            customArray.push(customDict);   
+            customDict = {};
+        } 
+    }); 
+    hc = JSON.stringify(customArray);
+    document.getElementById("hc").value = hc;
+}
+
+// custom image picker
+$('.upload__inputfile').each(function () {
+    $(this).on('change', function (e) {
+    imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+    var maxLength = 1;
+
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+    var iterator = 0;
+    filesArr.forEach(function (f, index) {
+        if (!f.type.match('image.*')) {
+        return;
+        }
+
+        if (imgArray.length > maxLength) {
+        return false
+        } else {
+        var len = 0;
+        for (var i = 0; i < imgArray.length; i++) {
+            if (imgArray[i] !== undefined) {
+            len++;
+            }
+        }
+        if (len > maxLength) {
+            return false;
+        } else {
+            imgArray.push(f);
+            
+            var reader = new FileReader();
+            reader.onload = function (e) {
+            innerObj.name = f.name;
+            innerObj.val = e.target.result;
+            secondArr.push(innerObj);
+            innerObj = {};
+            var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'><input type='hidden' id='img-"+f.name+"' name='img-"+f.name+"'></div></div></div>";
+            imgWrap.append(html);
+            document.getElementById('img-'+f.name).value= e.target.result;
+            if(secondArr.length == 1){
+                document.getElementById('img-preview').children[0].remove();
+                var pop = '<h5>Preview item</h5><div class="nft__item style-2"><div class="nft__item_wrap"><a href="#"><img src="'+e.target.result+'" id="" class="lazy nft__item_preview" alt=""></a></div><div class="nft__item_info"><a href="#"><h4>Collectible Name</h4></a><span></span></div></div>';
+                document.getElementById('img-preview').innerHTML = pop;
+            }
+            
+            iterator++;
+            }
+            reader.readAsDataURL(f);
+        }
+        }
+    });
+    });
+});
+
+// custom image upload close
+$('body').on('click', ".upload__img-close", function (e) {
+    
+    var file='';
+    if($(this)[0].childNodes[0].id.startsWith("img-https")){
+        file = $(this)[0].childNodes[0].id.substring(4);
+    }else{
+        file = $(this).parent().data("file");
+    } 
+    
+    for (var i = 0; i < imgArray.length; i++) {
+    if ((imgArray[i].name === file) || (imgArray[i] === file)) {
+        
+        imgArray.splice(i, 1);
+        break;
+    }
+    }
+    for (var i = 0; i < secondArr.length; i++) {
+    if (secondArr[i].name === file) {
+        secondArr.splice(i, 1);
+        break;
+    }
+    }
+    $(this).parent().parent().remove();
+    document.getElementById('upload_file').value= null;
+    document.getElementById('file_name').innerHTML= 'PNG, JPG, GIF, WEBP or MP4. Max 200mb.';
+    document.getElementById('img-preview').children[0].remove();
+    var p2 = '';
+    if(secondArr.length>0){
+        document.getElementById('img-preview').children[0].remove();
+        p2 = '<h5>Preview item</h5><div class="nft__item style-2"><div class="nft__item_wrap"><a href="#"><img src="'+secondArr[0].val+'" id="" class="lazy nft__item_preview" alt=""></a></div><div class="nft__item_info"><a href="#"><h4>Collectible Name</h4></a><span></span></div></div>';
+    }else{
+        p2 = '<h5>Preview item</h5><div class="nft__item style-2"><div class="nft__item_wrap"><a href="#"><img src="../static/images/no-img.jpg" id="" class="lazy nft__item_preview" alt=""></a></div><div class="nft__item_info"><a href="#"><h4>Collectible Name</h4></a><span></span></div></div>';
+    }
+    document.getElementById('img-preview').innerHTML = p2;
+});
+
+// render custom fields
+var decodeEntities = (function() {
+    var element = document.createElement('div');
+    function decodeHTMLEntities (str) {
+        if(str && typeof str === 'string') {
+            str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+            str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+            element.innerHTML = str;
+            str = element.textContent;
+            element.textContent = '';
+        }
+        return str;
+    }
+    return decodeHTMLEntities;
+})();
+
+var div = document.getElementById('custom-fields');
+var json = "{{ item.custom }}";
+
+if(typeof json != 'undefined'){
+    if(json == ''){
+
+    }else{
+        var parsed = JSON.parse(decodeEntities(json));
+    for(var i=0; i<parsed.length;i++){
+        div.innerHTML += '<h5>'+parsed[i].key+' <a class="field-delete"><i class="fa fa-trash"></i></a></h5><input type="text" name="item_title" id="item_title" value="'+parsed[i].value+'" class="form-control" placeholder="e.g. Crypto Funk" readonly><div class="spacer-20"></div>';
+    }
+    }
+    
+}else{
+       
+}
+
+
+    
+
+    
+            </script>    
+            <script src="{{url_for('static', filename='js/edit-item.js')}}"></script>
+        {% endif %}
+        {% if 'profile' in request.path %}
+            <script>
+                function ImageSetter(input,target,inputDiv) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        
+                        reader.onload = function (e) {
+                            target.attr('src', e.target.result);
+                            $(inputDiv).val(e.target.result);
+                        }
+                        
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                
+                $(".imgInp").change(function(){
+                var imgDiv=$(this).data('id');  
+                    imgDiv=$('#click_profile_img');
+                    inputDiv=$('#hidden_profile_image');    
+                    ImageSetter(this,imgDiv,inputDiv);
+                });
+
+                $(".bannerInp").change(function(){
+                var imgDiv=$(this).data('id');  
+                    imgDiv=$('#click_banner_img'); 
+                    inputDiv=$('#hidden_banner_image');   
+                    ImageSetter(this,imgDiv,inputDiv);
+                });
+            </script>
+        {% endif %}
+    </body>
+</html>

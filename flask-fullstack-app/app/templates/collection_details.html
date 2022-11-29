@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    
+    <!-- section begin -->
+    <section id="profile_banner" aria-label="section" class="text-light border-bottom" data-bgimage="url({{url_for('static', filename='images/samples/background.jpg')}}) center">
+    
+    </section>
+    <!-- section close -->
+    
+    
+    <section aria-label="section" class="d_coll no-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                   <div class="d_profile">
+                            <div class="profile_avatar">
+                                <div class="d_profile_img ">
+                                    <img src="{{ user.avatar(128) }}" style="width: 150px; height:150px;"alt="">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                
+                                <div class="profile_name">
+                                    <h4>
+                                        {{ collection.name }}                                                
+                                        <div class="clearfix"></div>
+                                        
+
+                                    </h4>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="de_tab tab_simple">
+
+                        <ul class="de_nav">
+                            <li class="active"><span>Items in this Collection</span></li>
+                        </ul>
+                        
+                        <div class="de_tab_content">
+                            
+                            <div class="tab-1">
+                                <div class="row">
+                                    {% for obj in master_obj %}
+                                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="nft__item style-2">
+                                                <div class="nft__item_wrap">
+                                                    <a href="/item_details/{{obj.id}}">
+                                                        <img src="{{obj.images}}" class="lazy nft__item_preview" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="nft__item_info">
+                                                    <a href="/item_details/{{obj.id}}">
+                                                        <h4>{{obj.name}}</h4>
+                                                    </a>
+                                                    <div class="nft__item_price description-wrapper" style="overflow-wrap: break-word;">
+                                                        <p class="description-inner-text">{{obj.description}}</p>
+                                                    </div>
+                                                    <div class="nft__item_action">
+                                                        <a href="/item_details/{{obj.id}}">View Item</a>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+</div>
+<!-- content close -->
+
+<a href="#" id="back-to-top"></a>
+{% endblock %}

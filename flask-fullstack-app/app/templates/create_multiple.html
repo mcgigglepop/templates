@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+    <section id="subheader">
+        <div class="center-y relative text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>Create Multiple Items</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section aria-label="section">
+        <div class="container">
+            <div class="row wow fadeIn">
+                <div class="col-lg-8 offset-lg-2">
+                    <form method="POST" action="/create_multiple" id="form-create-item" class="form-border" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="field-set collection-link">
+                            <h5>Upload CSV</h5>
+                            <p>Fill out a CSV template and upload to create multiple items. You can view the status and edit the items later in your dashboard. Add any number of custom fields in the CSV file.</p>
+                            <p>1. Download the Template</p>
+                            <p>2. Title is required</p>
+                            <p>3. Change "Custom Field" to the custom field name that you want (or delete it)</p>
+                            <p>4. Change "Custom Value" to the custom value you want (or delete it)</p>
+                            <p>5. Add as many Custom Field/Custom Value that you want</p>
+                            <p>For each item, choose a Collection. If no collection is provided, the item will automatically be assigned to your default collection. If a collection is provided that does not exist, a private collection will be created and the item assigned to it.</p>
+                            <div class="spacer-20"></div>
+                            <a href="../static/content/bulk-upload-generic.csv">Download the bulk upload template here</a><br /><br />
+                            <a href="../static/content/bulk-upload-pokemon.csv">Sample Pokemon Template</a><br /><br />
+                            <a href="../static/content/bulk-upload-mtg.csv">Sample Magic the Gathering Template</a><br /><br />
+                            <a href="../static/content/bulk-upload-sports.csv">Sample Sports Cards Template</a><br /><br />
+                            <div class="spacer-40"></div>
+                            <div class="upload__img-wrap"></div>
+                                <div class="upload__box">
+                                    <div class="upload__btn-box">
+                                        <div class="d-create-file">
+                                            <p id="file_name">Upload the CSV file here</p>
+                                            <input type="button" id="get_file" class="btn-main" value="Browse">
+                                            <input type="file" id="upload_file" class="upload__inputfile" name="csv">
+                                        </div>
+                                    </div>
+                                  <div class="upload__img-wrap"></div>
+                                </div>
+                                <input type="submit" id="submit" class="btn-main" value="Submit">
+                            <div class="spacer-20"></div>
+                            <div class="spacer-40"></div>
+                            <div class="spacer-20"></div>
+                            <div class="spacer-20"></div>
+                        </div>
+                    </form>
+                </div>                                    
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
